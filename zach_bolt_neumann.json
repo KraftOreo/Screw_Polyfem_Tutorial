@@ -41,16 +41,7 @@
             "value": [-10, 0, 0]
         }]
     },
-    "boundary_sidesets": [{
-        "id": 3,
-        "axis": 2,
-        "position": 0.105977
-    },
-    {
-        "id": 4,
-        "axis": 2,
-        "position": 0.105977
-    },
+    "boundary_sidesets": [
     {
         "id": 3,
         "axis": -3,
