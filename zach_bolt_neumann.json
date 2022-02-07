@@ -45,12 +45,12 @@
     {
         "id": 3,
         "axis": -3,
-        "position": -0.037
+        "position": -0.039
     },
     {
         "id": 4,
         "axis": 3,
-        "position": 0.037
+        "position": 0.039
     }],
     "obstacles": [{
         "mesh": "nut-big.stl",
