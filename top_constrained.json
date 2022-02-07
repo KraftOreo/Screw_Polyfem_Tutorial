@@ -1,0 +1,70 @@
+{
+    "problem": "GenericTensor",
+    "tensor_formulation": "NeoHookean",
+    "nl_solver": "newton",
+    "solver_params": {
+        "mtype": 2,
+        "gradNorm": 1e-5,
+        "useGradNorm": false
+    },
+    "solver_type": "Eigen::CholmodSupernodalLLT",
+    "line_search": "bisection",
+    "project_to_psd": true,
+    "lump_mass_matrix": true,
+
+
+    "normalize_mesh": false,
+
+    "quadrature_order": 1,
+
+    "vismesh_rel_area": 10000000,
+    "output": "result.json",
+    "tend": 10,
+    "dt": 0.01,
+    "dhat": 1e-4,
+    "mu": 0,
+    "meshes": [{
+        "mesh": "screw-big.msh",
+        "position": [0, 0, 0],
+        "body_id": 1,
+        "scale": 0.01
+    }],
+    "has_collision": true,
+    "problem_params": {
+        "is_time_dependent": true,
+        "rhs": [0, 0, 0],
+        "dirichlet_boundary": [{
+            "id": 1,
+            "value": ["x*cos(-2*pi*t) + z * sin(-2*pi*t)-x",
+                      "-1.33*0.01*t", 
+                      "-1*x*sin(-2*pi*t) + z * cos(-2*pi*t)-z"],
+            "dimension": [true, true, true]
+        }]
+    },
+    "boundary_sidesets": [{
+        "id": 1,
+        "axis": 2,
+        "position": 0.13
+    }],
+    "obstacles": [{
+        "mesh": "nut-big.stl",
+        "position": [0, -0.02675, 0],
+        "scale": 0.01,
+        "enabled": true
+    }
+],
+    "body_params": [{
+        "id": 1,
+        "E": 2e11,
+        "nu": 0.3,
+        "rho": 8050
+    }],
+    "save_solve_sequence_debug": false,
+    "export": {
+        "time_sequence": "screws.pvd",
+        "paraview": "result.vtu",
+        "body_ids": true,
+        "material_params": true
+    },
+    "save_time_sequence": true
+}
