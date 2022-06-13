@@ -23,7 +23,7 @@
     "dhat": 1e-4,
     "mu": 0.3,
     "meshes": [{
-        "mesh": "screw-big.msh",
+        "mesh": "data/screw-big.msh",
         "position": [0, 0, 0],
         "body_id": 1,
         "scale": 0.01
@@ -32,28 +32,27 @@
     "problem_params": {
         "is_time_dependent": true,
         "rhs": [0, 0, 0],
-        "neumann_boundary": [{
-            "id": 3,
-            "value": [1000, 0, 0]
-        },
-        {
-            "id": 4,
-            "value": [-1000, 0, 0]
+        "dirichlet_boundary": [{
+            "id": 2,
+            "value": ["x*cos(-2*pi*t) + z * sin(-2*pi*t)-x",
+                      "-1.33*0.01*t", 
+                      "-1*x*sin(-2*pi*t) + z * cos(-2*pi*t)-z"],
+            "dimension": [true, true, true]
         }]
     },
     "boundary_sidesets": [
     {
-        "id": 3,
+        "id": 2,
         "axis": -3,
         "position": -0.039
     },
     {
-        "id": 4,
+        "id": 2,
         "axis": 3,
         "position": 0.039
     }],
     "obstacles": [{
-        "mesh": "nut-big.stl",
+        "mesh": "data/nut-big.stl",
         "position": [0, -0.05335, 0],
         "scale": 0.01,
         "enabled": true

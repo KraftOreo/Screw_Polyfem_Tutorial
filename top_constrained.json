@@ -24,7 +24,7 @@
     "dhat": 1e-4,
     "mu": 0,
     "meshes": [{
-        "mesh": "screw-big.msh",
+        "mesh": "data/screw-big.msh",
         "position": [0, 0, 0],
         "body_id": 1,
         "scale": 0.01
@@ -34,7 +34,7 @@
         "is_time_dependent": true,
         "rhs": [0, 0, 0],
         "dirichlet_boundary": [{
-            "id": 1,
+            "id": 3,
             "value": ["x*cos(-2*pi*t) + z * sin(-2*pi*t)-x",
                       "-1.33*0.01*t", 
                       "-1*x*sin(-2*pi*t) + z * cos(-2*pi*t)-z"],
@@ -42,12 +42,12 @@
         }]
     },
     "boundary_sidesets": [{
-        "id": 1,
+        "id": 3,
         "axis": 2,
-        "position": 0.13
+        "position": 0.11
     }],
     "obstacles": [{
-        "mesh": "nut-big.stl",
+        "mesh": "data/nut-big.stl",
         "position": [0, -0.02675, 0],
         "scale": 0.01,
         "enabled": true
