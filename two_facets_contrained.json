@@ -1,75 +1,120 @@
 {
-    "problem": "GenericTensor",
-    "tensor_formulation": "NeoHookean",
-    "nl_solver": "newton",
-    "solver_params": {
-        "mtype": 2,
-        "gradNorm": 1e-5,
-        "useGradNorm": false
+    "geometry": [
+        {
+            "mesh": "data/screw-big.msh",
+            "transformation": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": 0.01
+            },
+            "volume_selection": 1,
+            "advanced": {
+                "normalize_mesh": false
+            },
+            "surface_selection": [
+                {
+                    "id": 2,
+                    "axis": -3,
+                    "position": -0.039
+                },
+                {
+                    "id": 2,
+                    "axis": 3,
+                    "position": 0.039
+                }
+            ]
+        },
+        {
+            "mesh": "data/nut-big.stl",
+            "is_obstacle": true,
+            "enabled": true,
+            "transformation": {
+                "translation": [
+                    0,
+                    -0.05335,
+                    0
+                ],
+                "scale": 0.01
+            }
+        }
+    ],
+    "space": {
+        "advanced": {
+            "quadrature_order": 1
+        }
     },
-    "solver_type": "Eigen::CholmodSupernodalLLT",
-    "line_search": "bisection",
-    "project_to_psd": true,
-    "lump_mass_matrix": true,
-
-    "normalize_mesh": false,
-
-    "quadrature_order": 1,
-
-    "vismesh_rel_area": 10000000,
-    "output": "result.json",
-    "tend": 10,
-    "dt": 0.01,
-    "dhat": 1e-4,
-    "mu": 0.3,
-    "meshes": [{
-        "mesh": "data/screw-big.msh",
-        "position": [0, 0, 0],
-        "body_id": 1,
-        "scale": 0.01
-    }],
-    "has_collision": true,
-    "problem_params": {
-        "is_time_dependent": true,
-        "rhs": [0, 0, 0],
-        "dirichlet_boundary": [{
-            "id": 2,
-            "value": ["x*cos(-2*pi*t) + z * sin(-2*pi*t)-x",
-                      "-1.33*0.01*t", 
-                      "-1*x*sin(-2*pi*t) + z * cos(-2*pi*t)-z"],
-            "dimension": [true, true, true]
-        }]
+    "time": {
+        "tend": 10,
+        "dt": 0.01
     },
-    "boundary_sidesets": [
-    {
-        "id": 2,
-        "axis": -3,
-        "position": -0.039
+    "contact": {
+        "enabled": true,
+        "dhat": 0.0001,
+        "friction_coefficient": 0.3
     },
-    {
-        "id": 2,
-        "axis": 3,
-        "position": 0.039
-    }],
-    "obstacles": [{
-        "mesh": "data/nut-big.stl",
-        "position": [0, -0.05335, 0],
-        "scale": 0.01,
-        "enabled": true
+    "solver": {
+        "linear": {
+            "solver": "Eigen::CholmodSupernodalLLT"
+        },
+        "nonlinear": {
+            "line_search": {
+                "method": "backtracking"
+            },
+            "solver": "newton",
+            "grad_norm": 1e-05,
+            "use_grad_norm": false
+        },
+        "advanced": {
+            "lump_mass_matrix": true
+        }
+    },
+    "boundary_conditions": {
+        "rhs": [
+            0,
+            0,
+            0
+        ],
+        "dirichlet_boundary": [
+            {
+                "id": 2,
+                "value": [
+                    "x*cos(-2*pi*t) + z * sin(-2*pi*t)-x",
+                    "-1.33*0.01*t",
+                    "-1*x*sin(-2*pi*t) + z * cos(-2*pi*t)-z"
+                ],
+                "dimension": [
+                    true,
+                    true,
+                    true
+                ]
+            }
+        ]
+    },
+    "materials": [
+        {
+            "id": 1,
+            "E": 200000000000.0,
+            "nu": 0.3,
+            "rho": 8050,
+            "type": "NeoHookean"
+        }
+    ],
+    "output": {
+        "json": "result.json",
+        "paraview": {
+            "file_name": "screws.pvd",
+            "options": {
+                "material": true,
+                "body_ids": true
+            },
+            "vismesh_rel_area": 10000000
+        },
+        "advanced": {
+            "save_solve_sequence_debug": false,
+            "save_time_sequence": true
+        }
     }
-],
-    "body_params": [{
-        "id": 1,
-        "E": 2e11,
-        "nu": 0.3,
-        "rho": 8050
-    }],
-    "save_solve_sequence_debug": false,
-    "export": {
-        "time_sequence": "screws.pvd",
-        "paraview": "result.vtu",
-        "body_ids": true,
-        "material_params": true
-    },
-    "save_time_sequence": true
 }
